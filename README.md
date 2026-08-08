@@ -4,7 +4,7 @@
 
 ### O objetivo do projeto é criar um sistema simples que compare as habilidades de uma pessoa candidata com os requisitos de algumas vagas fictícias de front-end júnior.
 ### _________________________________________________________________________________________
-### A aplicação deverá analisa: 
+### A aplicação analisa: 
 ### ● quais habilidades o candidato possui? 
 ### ● quais habilidades cada vaga exige?
 ### ● quais habilidades estão faltando?
