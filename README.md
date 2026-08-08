@@ -61,30 +61,74 @@
 
 #### *RF14 – Usar Promise e async/await*
 
-## 📂 Estrutura do Código
+## 📂 Estrutura do Código X Requisitos funcionais
 
-###### // Classe base Pessoa
-###### class Pessoa { ... }
-
-###### // Classe Candidato (herda de Pessoa)
-###### class Candidato extends Pessoa { ... }
-
-###### // Classe Vaga
-###### class Vaga { ... }
-
-###### // Funções de compatibilidade e classificação
-###### function calcularCompatibilidade(...) { ... }
-###### function classificarCompatibilidade(...) { ... }
-
-###### // Promise simulando busca de vagas
-###### function buscarVagas() { ... }
-
-###### // Função principal assíncrona
-###### async function analisarCandidato(candidato) { ... }
-
-###### // Criação do candidato e execução
+###### // RF01 – Criar perfil do candidato
 ###### const candidato = new Candidato("Henrique", "Front-End", ["HTML", "CSS", "JavaScript"], 1);
-###### analisarCandidato(candidato);
+
+###### // RF02 - lista de vagas
+###### // RF14 – Promise simulando busca de vagas 
+###### function buscarVagas() {
+######   return new Promise((resolve) => {
+######     setTimeout(() => {
+######       resolve([
+######         new Vaga("TechCorp", "Front-End Júnior", ["HTML", "CSS", "JavaScript", "React"]),
+######         new Vaga("WebSolutions", "Front-End Júnior", ["HTML", "CSS", "Vue", "Git"]),
+######         new Vaga("StartupX", "Front-End Júnior", ["HTML", "CSS", "JavaScript", "TypeScript"])
+######       ]);
+######     }, 1000);
+######   });
+###### }
+
+###### // RF03 – Calcular compatibilidade
+######   calcularCompatibilidade(candidato) {
+###### // RF12 – Callback: função passada para filter
+###### // RF13 – Closure: função acessa variável externa (candidato)
+######     const habilidadesComuns = this.requisitos.filter(req =>
+######       candidato.habilidades.includes(req)
+######     );
+######     const percentual = (habilidadesComuns.length / this.requisitos.length) * 100;
+######     return percentual;
+######   }
+
+###### // RF04 – Classificar compatibilidade
+###### function classificarCompatibilidade(percentual) {
+######   if (percentual >= 80) return "Alta compatibilidade";
+######   else if (percentual >= 50) return "Média compatibilidade";
+######   else return "Baixa compatibilidade";
+###### }
+
+###### // RF05 – Listar habilidades faltantes
+######   listarFaltantes(candidato) {
+######     return this.requisitos.filter(req => !candidato.habilidades.includes(req));
+######   }
+
+###### // RF06 – Encontrar a vaga mais compatível (reduce)
+######   const vagaMaisCompativel = vagas.reduce((melhor, vaga) => {
+######     return vaga.calcularCompatibilidade(candidato) > melhor.calcularCompatibilidade(candidato) ? vaga : melhor;
+######   });
+
+###### // RF07 – Recomendação de estudo
+######   const recomendacao = vagaMaisCompativel.listarFaltantes(candidato);
+######   console.log(`Sugestão de estudo: ${recomendacao.join(", ") || "Já possui todas as habilidades!"}`);
+
+###### // RF08 – Usar métodos de array (forEach)
+######   vagas.forEach(vaga => {
+######     const percentual = vaga.calcularCompatibilidade(candidato);
+######     const classificacao = classificarCompatibilidade(percentual);
+######     const faltantes = vaga.listarFaltantes(candidato);
+
+###### // RF09 – Criar uma classe base
+###### // RF10 – Usar herança
+###### // RF11 – Demonstrar uso do this
+###### class Pessoa {
+######   constructor(nome, area, habilidades, experiencia) {
+######     this.nome = nome;          // uso do this para acessar atributos
+######     this.area = area;
+######     this.habilidades = habilidades;
+######     this.experiencia = experiencia;
+######   }
+###### }
 
 ## 📊 Exemplo de Saída no Console
 
@@ -95,3 +139,86 @@
 ###### ---------------------------------------------------
 ###### Henrique, a vaga mais compatível é na TechCorp
 ###### Sugestão de estudo: React
+
+// Classe base Pessoa (RF09, RF10, RF11)
+class Pessoa {
+  constructor(nome, area, habilidades, experiencia) {
+    this.nome = nome;          // RF11 – uso do this
+    this.area = area;
+    this.habilidades = habilidades;
+    this.experiencia = experiencia;
+  }
+}
+
+// Candidato herda de Pessoa (RF10)
+class Candidato extends Pessoa {
+  constructor(nome, area, habilidades, experiencia) {
+    super(nome, area, habilidades, experiencia);
+  }
+}
+
+// Classe Vaga (RF09)
+class Vaga {
+  constructor(empresa, cargo, requisitos) {
+    this.empresa = empresa;
+    this.cargo = cargo;
+    this.requisitos = requisitos;
+  }
+
+  // RF03 – Calcular compatibilidade
+  calcularCompatibilidade(candidato) {
+    const habilidadesComuns = this.requisitos.filter(req =>
+      candidato.habilidades.includes(req) // RF12 callback, RF13 closure
+    );
+    const percentual = (habilidadesComuns.length / this.requisitos.length) * 100;
+    return percentual;
+  }
+
+  // RF05 – Listar habilidades faltantes
+  listarFaltantes(candidato) {
+    return this.requisitos.filter(req => !candidato.habilidades.includes(req));
+  }
+}
+
+// RF04 – Classificar compatibilidade
+function classificarCompatibilidade(percentual) {
+  if (percentual >= 80) return "Alta compatibilidade";
+  else if (percentual >= 50) return "Média compatibilidade";
+  else return "Baixa compatibilidade";
+}
+
+
+
+// Função principal assíncrona (RF14 – async/await)
+async function analisarCandidato(candidato) {
+  const vagas = await buscarVagas(); // aguarda Promise
+
+  // RF03 - Cálculo compatibilidade.
+  // RF04 - Classificação e compatibilidade.
+  // RF05 - Lista habilidades faltantes.
+  // RF08 – Usar métodos de array.
+  vagas.forEach(vaga => {
+    const percentual = vaga.calcularCompatibilidade(candidato);
+    const classificacao = classificarCompatibilidade(percentual);
+    const faltantes = vaga.listarFaltantes(candidato);
+
+    console.log(`Empresa: ${vaga.empresa}`);
+    console.log(`Cargo: ${vaga.cargo}`);
+    console.log(`Compatibilidade: ${percentual.toFixed(2)}% - ${classificacao}`);
+    console.log(`Habilidades faltantes: ${faltantes.join(", ") || "Nenhuma"}`);
+    console.log("---------------------------------------------------");
+  });
+
+  // RF06 – Encontrar a vaga mais compatível
+  const vagaMaisCompativel = vagas.reduce((melhor, vaga) => {
+    return vaga.calcularCompatibilidade(candidato) > melhor.calcularCompatibilidade(candidato) ? vaga : melhor;
+  });
+
+  console.log(`A vaga mais compatível é em ${vagaMaisCompativel.empresa}`);
+
+  // RF07 – Recomendação de estudo
+  const recomendacao = vagaMaisCompativel.listarFaltantes(candidato);
+  console.log(`Sugestão de estudo: ${recomendacao.join(", ") || "Já possui todas as habilidades!"}`);
+}
+
+
