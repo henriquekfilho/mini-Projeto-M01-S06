@@ -32,8 +32,7 @@
 
 #### *RF07 – Gerar uma recomendação de estudo*
 
-## 🛠️ Conceitos de Programação Demonstrados
-### Métodos de array: forEach, filter, reduce
+###### Métodos de array: forEach, filter, reduce
 
 #### *RF08 – Usar métodos de array*
 
