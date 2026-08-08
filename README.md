@@ -1,34 +1,96 @@
 # Repositório do mini projeto do curso de Front end React - SCTEC
 
-## SkillMatch JS: Simulador de Compatibilidade com Vaga Front-End Júnior
-![This is an alt text.]("C:\Users\henri\Downloads\Copilot_20260807_230134.png" "Fluxo do programa")
+## 📌 SkillMatch – Analisador de Vagas
+Este projeto em JavaScript tem como objetivo analisar a compatibilidade entre um candidato e diferentes vagas de emprego, aplicando conceitos de programação orientada a objetos, funções de array, callbacks, closures e programação assíncrona com Promise e async/await.
 
-### O objetivo do projeto é criar um sistema simples que compare as habilidades de uma pessoa candidata com os requisitos de algumas vagas fictícias de front-end júnior.
-### _________________________________________________________________________________________
-### A aplicação analisa: 
-### ● quais habilidades o candidato possui? 
-### ● quais habilidades cada vaga exige?
-### ● quais habilidades estão faltando?
-### ● qual é o percentual de compatibilidade com cada vaga? 
-### ● qual vaga possui maior compatibilidade?
-### ● qual recomendação de estudo deve ser dada ao candidato.
+🚀 Fluxo do Programa
+Perfil do candidato é criado com nome, área, habilidades e experiência.
 
-### Explicação do código:
+RF01 – Criar o perfil do candidato
 
-### Regras de Negócio e Critérios
-### - Cálculo de Compatibilidade
-### A regra de cálculo é consistente para todas as vagas e baseia-se na proporção de habilidades dominadas pelo candidato em relação aos requisitos totais da vaga:
+Lista de vagas é definida com empresa, cargo e requisitos.
 
-### Fórmula: (Requisitos Correspondentes / Total de Requisitos da Vaga) * 100
-### const percentual = (habilidadesComuns.length / this.requisitos.length) * 100
-### O resultado gera um percentual de 0 a 100%.
+RF02 – Criar uma lista de vagas
 
+Para cada vaga, o programa calcula a compatibilidade com base nas habilidades do candidato.
 
-### Estratégia de Maior Aderência
-A estratégia utilizada analisa o array de resultados através do método .reduce(). O sistema compara os percentuais obtidos e retorna o objeto da vaga que possuir o maior valor numérico de compatibilidade.
+RF03 – Calcular compatibilidade com cada vaga
 
-- Critério de Recomendação de Estudo
-O critério adota uma abordagem de prioridade técnica. Caso o candidato possua habilidades faltantes na vaga de maior aderência, o sistema filtra e exibe explicitamente quais tecnologias ele precisa estudar imediatamente para atingir 100% de alinhamento com aquela empresa.
+O percentual é classificado em alta, média ou baixa compatibilidade.
 
-👤 Autor
-Desenvolvido por Henrique — Projeto prático de avaliação em JavaScript.
+RF04 – Classificar a compatibilidade
+
+São listadas as habilidades faltantes que o candidato ainda não possui.
+
+RF05 – Listar habilidades faltantes
+
+O programa encontra a vaga mais compatível usando reduce.
+
+RF06 – Encontrar a vaga com maior compatibilidade
+
+Com base nas habilidades faltantes, gera uma recomendação de estudo.
+
+RF07 – Gerar uma recomendação de estudo
+
+🛠️ Conceitos de Programação Demonstrados
+Métodos de array: forEach, filter, reduce
+
+RF08 – Usar métodos de array
+
+Classes: Pessoa, Candidato, Vaga
+
+RF09 – Criar uma classe
+
+Herança: Candidato herda de Pessoa
+
+RF10 – Usar herança
+
+Uso do this: dentro das classes para acessar atributos
+
+RF11 – Demonstrar uso do this
+
+Callback: funções passadas para forEach e filter
+
+RF12 – Usar callback
+
+Closure: funções anônimas acessando variáveis externas
+
+RF13 – Usar closure
+
+Promise e async/await: simulação de busca de vagas externas
+
+RF14 – Usar Promise e async/await
+
+📂 Estrutura do Código
+js
+// Classe base Pessoa
+class Pessoa { ... }
+
+// Classe Candidato (herda de Pessoa)
+class Candidato extends Pessoa { ... }
+
+// Classe Vaga
+class Vaga { ... }
+
+// Funções de compatibilidade e classificação
+function calcularCompatibilidade(...) { ... }
+function classificarCompatibilidade(...) { ... }
+
+// Promise simulando busca de vagas
+function buscarVagas() { ... }
+
+// Função principal assíncrona
+async function analisarCandidato(candidato) { ... }
+
+// Criação do candidato e execução
+const candidato = new Candidato("Henrique", "Front-End", ["HTML", "CSS", "JavaScript"], 1);
+analisarCandidato(candidato);
+📊 Exemplo de Saída no Console
+Código
+Empresa: TechCorp
+Cargo: Front-End Júnior
+Compatibilidade: 75.00% - Média compatibilidade
+Habilidades faltantes: React
+---------------------------------------------------
+Henrique, a vaga mais compatível é na TechCorp
+Sugestão de estudo: React
