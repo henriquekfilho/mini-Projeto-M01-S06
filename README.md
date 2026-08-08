@@ -78,7 +78,6 @@
 ######       ]);
 ######     }, 1000);
 ######   });
-###### }
 
 ###### // RF03 – Calcular compatibilidade
 ######   calcularCompatibilidade(candidato) {
@@ -89,19 +88,16 @@
 ######     );
 ######     const percentual = (habilidadesComuns.length / this.requisitos.length) * 100;
 ######     return percentual;
-######   }
 
 ###### // RF04 – Classificar compatibilidade
 ###### function classificarCompatibilidade(percentual) {
 ######   if (percentual >= 80) return "Alta compatibilidade";
 ######   else if (percentual >= 50) return "Média compatibilidade";
 ######   else return "Baixa compatibilidade";
-###### }
 
 ###### // RF05 – Listar habilidades faltantes
 ######   listarFaltantes(candidato) {
 ######     return this.requisitos.filter(req => !candidato.habilidades.includes(req));
-######   }
 
 ###### // RF06 – Encontrar a vaga mais compatível (reduce)
 ######   const vagaMaisCompativel = vagas.reduce((melhor, vaga) => {
@@ -127,8 +123,6 @@
 ######     this.area = area;
 ######     this.habilidades = habilidades;
 ######     this.experiencia = experiencia;
-######   }
-###### }
 
 ## 📊 Exemplo de Saída no Console
 
@@ -139,86 +133,3 @@
 ###### ---------------------------------------------------
 ###### Henrique, a vaga mais compatível é na TechCorp
 ###### Sugestão de estudo: React
-
-// Classe base Pessoa (RF09, RF10, RF11)
-class Pessoa {
-  constructor(nome, area, habilidades, experiencia) {
-    this.nome = nome;          // RF11 – uso do this
-    this.area = area;
-    this.habilidades = habilidades;
-    this.experiencia = experiencia;
-  }
-}
-
-// Candidato herda de Pessoa (RF10)
-class Candidato extends Pessoa {
-  constructor(nome, area, habilidades, experiencia) {
-    super(nome, area, habilidades, experiencia);
-  }
-}
-
-// Classe Vaga (RF09)
-class Vaga {
-  constructor(empresa, cargo, requisitos) {
-    this.empresa = empresa;
-    this.cargo = cargo;
-    this.requisitos = requisitos;
-  }
-
-  // RF03 – Calcular compatibilidade
-  calcularCompatibilidade(candidato) {
-    const habilidadesComuns = this.requisitos.filter(req =>
-      candidato.habilidades.includes(req) // RF12 callback, RF13 closure
-    );
-    const percentual = (habilidadesComuns.length / this.requisitos.length) * 100;
-    return percentual;
-  }
-
-  // RF05 – Listar habilidades faltantes
-  listarFaltantes(candidato) {
-    return this.requisitos.filter(req => !candidato.habilidades.includes(req));
-  }
-}
-
-// RF04 – Classificar compatibilidade
-function classificarCompatibilidade(percentual) {
-  if (percentual >= 80) return "Alta compatibilidade";
-  else if (percentual >= 50) return "Média compatibilidade";
-  else return "Baixa compatibilidade";
-}
-
-
-
-// Função principal assíncrona (RF14 – async/await)
-async function analisarCandidato(candidato) {
-  const vagas = await buscarVagas(); // aguarda Promise
-
-  // RF03 - Cálculo compatibilidade.
-  // RF04 - Classificação e compatibilidade.
-  // RF05 - Lista habilidades faltantes.
-  // RF08 – Usar métodos de array.
-  vagas.forEach(vaga => {
-    const percentual = vaga.calcularCompatibilidade(candidato);
-    const classificacao = classificarCompatibilidade(percentual);
-    const faltantes = vaga.listarFaltantes(candidato);
-
-    console.log(`Empresa: ${vaga.empresa}`);
-    console.log(`Cargo: ${vaga.cargo}`);
-    console.log(`Compatibilidade: ${percentual.toFixed(2)}% - ${classificacao}`);
-    console.log(`Habilidades faltantes: ${faltantes.join(", ") || "Nenhuma"}`);
-    console.log("---------------------------------------------------");
-  });
-
-  // RF06 – Encontrar a vaga mais compatível
-  const vagaMaisCompativel = vagas.reduce((melhor, vaga) => {
-    return vaga.calcularCompatibilidade(candidato) > melhor.calcularCompatibilidade(candidato) ? vaga : melhor;
-  });
-
-  console.log(`A vaga mais compatível é em ${vagaMaisCompativel.empresa}`);
-
-  // RF07 – Recomendação de estudo
-  const recomendacao = vagaMaisCompativel.listarFaltantes(candidato);
-  console.log(`Sugestão de estudo: ${recomendacao.join(", ") || "Já possui todas as habilidades!"}`);
-}
-
-
