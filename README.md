@@ -49,7 +49,7 @@
 
 ## 📂 Estrutura do Código X Requisitos funcionais
 
-### // RF09 – Criar uma classe
+// RF09 – Criar uma classe
 class Pessoa {
   constructor(nome, area, habilidades, experiencia) {
 // RF11 – Demonstrar uso do this para acessar atributos
